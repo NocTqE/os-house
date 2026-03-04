@@ -1,0 +1,87 @@
+#!/bin/sh
+set -e
+
+echo ">>> SylonOS: Configuration du theme sombre + orange..."
+
+# --- SDDM theme sombre ---
+mkdir -p /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/theme.conf << 'SDDMTHEME'
+[Theme]
+Current=breeze
+CursorTheme=breeze_cursors
+
+[General]
+InputMethod=
+SDDMTHEME
+
+# --- KDE global defaults (pour tous les utilisateurs) ---
+mkdir -p /etc/xdg
+
+# Forcer Breeze Dark comme theme global
+cat > /etc/xdg/kdeglobals << 'KDEGLOBALS'
+[General]
+ColorScheme=BreezeDark
+Name=Breeze Dark
+widgetStyle=Breeze
+
+[Icons]
+Theme=breeze-dark
+
+[KDE]
+LookAndFeelPackage=org.kde.breezedark.desktop
+SingleClick=false
+widgetStyle=breeze
+
+[Colors:View]
+BackgroundNormal=35,38,41
+ForegroundNormal=239,240,241
+
+[Colors:Window]
+BackgroundNormal=42,46,50
+ForegroundNormal=239,240,241
+
+[Colors:Selection]
+BackgroundNormal=255,109,0
+ForegroundNormal=255,255,255
+
+[Colors:Button]
+BackgroundNormal=49,54,59
+ForegroundNormal=239,240,241
+
+[Colors:Tooltip]
+BackgroundNormal=49,54,59
+ForegroundNormal=239,240,241
+KDEGLOBALS
+
+# --- Kwin : effets visuels ---
+cat > /etc/xdg/kwinrc << 'KWINRC'
+[org.kde.kdecoration2]
+BorderSize=Normal
+ButtonsOnLeft=
+ButtonsOnRight=IAX
+library=org.kde.breeze
+theme=Breeze
+
+[Plugins]
+blurEnabled=true
+contrastEnabled=true
+slideEnabled=true
+
+[Effect-blur]
+BlurStrength=10
+NoiseStrength=0
+
+[Windows]
+BorderlessMaximizedWindows=false
+KWINRC
+
+# --- Plasma theme sombre ---
+cat > /etc/xdg/plasmarc << 'PLASMARC'
+[Theme]
+name=breeze-dark
+
+[Wallpapers]
+usersWallpapers=
+PLASMARC
+
+echo ">>> Theme configure."

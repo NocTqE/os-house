@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+echo ">>> SylonOS: Configuration du bureau..."
+
+# Configurer SDDM comme display manager par defaut
+echo "/usr/bin/sddm" > /etc/X11/default-display-manager
+mkdir -p /etc/sddm.conf.d
+
+# Session Plasma par defaut
+cat > /etc/sddm.conf.d/sylon.conf << 'SDDMCONF'
+[Theme]
+Current=breeze
+
+[General]
+InputMethod=
+
+[Users]
+MaximumUid=60000
+MinimumUid=1000
+SDDMCONF
+
+echo ">>> Configuration bureau terminee."

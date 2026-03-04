@@ -1,0 +1,36 @@
+# SylonOS Plymouth Theme Script
+# Fond noir avec logo centre et points de chargement orange
+
+Window.SetBackgroundTopColor(0.0, 0.0, 0.0);
+Window.SetBackgroundBottomColor(0.0, 0.0, 0.0);
+
+# Charger et centrer le logo
+logo.image = Image("logo.png");
+logo.sprite = Sprite(logo.image);
+logo.sprite.SetX(Window.GetWidth() / 2 - logo.image.GetWidth() / 2);
+logo.sprite.SetY(Window.GetHeight() / 2 - logo.image.GetHeight() / 2 - 40);
+logo.sprite.SetOpacity(1);
+
+# Animation de points de chargement
+NUM_DOTS = 3;
+dots_x = Window.GetWidth() / 2 - 30;
+dots_y = Window.GetHeight() / 2 + logo.image.GetHeight() / 2;
+
+fun refresh_callback() {
+    time = Plymouth.GetTime();
+    for (i = 0; i < NUM_DOTS; i++) {
+        dot_opacity = Math.Abs(Math.Sin((time * 2) + (i * 0.8)));
+        dot = Image("dot.png");
+        sprite = Sprite(dot);
+        sprite.SetX(dots_x + (i * 25));
+        sprite.SetY(dots_y);
+        sprite.SetOpacity(dot_opacity);
+    }
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);
+
+# Masquer les messages systeme
+fun message_callback(text) {
+}
+Plymouth.SetMessageFunction(message_callback);
