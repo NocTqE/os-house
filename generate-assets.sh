@@ -1,12 +1,12 @@
 #!/bin/bash
 # =============================================================================
-# SylonOS - Generateur d'assets graphiques
-# A executer dans WSL2 apres : sudo apt install -y imagemagick
+# ArcheOS - Generateur d'assets graphiques
+# A executer dans WSL2 ou GitHub Actions
 # =============================================================================
 
 set -e
 
-echo ">>> Generation des assets SylonOS..."
+echo ">>> Generation des assets ArcheOS..."
 
 # Installer imagemagick si necessaire
 if ! command -v convert &>/dev/null; then
@@ -16,14 +16,14 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# --- Logo Plymouth (texte "SylonOS" blanc sur fond transparent) ---
-PLYMOUTH_DIR="$SCRIPT_DIR/config/includes.chroot/usr/share/plymouth/themes/sylon"
+# --- Logo Plymouth (texte "ArcheOS" blanc sur fond transparent) ---
+PLYMOUTH_DIR="$SCRIPT_DIR/config/includes.chroot/usr/share/plymouth/themes/arche"
 mkdir -p "$PLYMOUTH_DIR"
 
 convert -size 400x120 xc:transparent \
     -font "DejaVu-Sans-Bold" -pointsize 64 \
     -fill white -gravity center \
-    -annotate 0 "SylonOS" \
+    -annotate 0 "ArcheOS" \
     "$PLYMOUTH_DIR/logo.png"
 echo "  [OK] Logo Plymouth genere"
 
@@ -34,20 +34,19 @@ convert -size 16x16 xc:transparent \
     "$PLYMOUTH_DIR/dot.png"
 echo "  [OK] Dot Plymouth genere"
 
-# --- Wallpaper (fond sombre avec accent orange) ---
-WALLPAPER_DIR="$SCRIPT_DIR/config/includes.chroot/usr/share/backgrounds/sylon"
+# --- Wallpaper : deja inclus dans le repo (fond-arche.jpg) ---
+WALLPAPER_DIR="$SCRIPT_DIR/config/includes.chroot/usr/share/backgrounds/arche"
 mkdir -p "$WALLPAPER_DIR"
-
-# Fond noir-gris avec un halo orange subtil au centre
-convert -size 1920x1080 \
-    -define gradient:direction=diagonal \
-    "gradient:#1a1a2e-#0f0f1a" \
-    \( -size 1920x1080 xc:transparent \
-       -fill "rgba(255,109,0,0.15)" \
-       -draw "circle 960,540 960,200" \) \
-    -composite \
-    "$WALLPAPER_DIR/default-wallpaper.png"
-echo "  [OK] Wallpaper genere"
+if [ ! -f "$WALLPAPER_DIR/default-wallpaper.jpg" ]; then
+    echo "  [WARN] Wallpaper manquant. Genere un placeholder..."
+    convert -size 1920x1080 xc:"#1a1a2e" \
+        -font "DejaVu-Sans-Bold" -pointsize 48 \
+        -fill white -gravity center \
+        -annotate 0 "ArcheOS" \
+        "$WALLPAPER_DIR/default-wallpaper.jpg"
+else
+    echo "  [OK] Wallpaper deja present"
+fi
 
 # --- Splash isolinux (640x480, ecran de boot du CD) ---
 ISOLINUX_DIR="$SCRIPT_DIR/config/includes.binary/isolinux"
@@ -56,7 +55,7 @@ mkdir -p "$ISOLINUX_DIR"
 convert -size 640x480 xc:"#0f0f1a" \
     -font "DejaVu-Sans-Bold" -pointsize 36 \
     -fill "#FF6D00" -gravity center \
-    -annotate +0-40 "SylonOS" \
+    -annotate +0-40 "ArcheOS" \
     -font "DejaVu-Sans" -pointsize 16 \
     -fill "#888888" \
     -annotate +0+20 "Appuyez sur Entree pour installer" \
@@ -64,8 +63,4 @@ convert -size 640x480 xc:"#0f0f1a" \
 echo "  [OK] Splash isolinux genere"
 
 echo ""
-echo ">>> Tous les assets ont ete generes avec succes !"
-echo "    - Plymouth logo: $PLYMOUTH_DIR/logo.png"
-echo "    - Plymouth dot:  $PLYMOUTH_DIR/dot.png"
-echo "    - Wallpaper:     $WALLPAPER_DIR/default-wallpaper.png"
-echo "    - Boot splash:   $ISOLINUX_DIR/splash.png"
+echo ">>> Assets generes avec succes !"

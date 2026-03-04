@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-echo ">>> SylonOS: Configuration utilisateur..."
+echo ">>> ArcheOS: Configuration utilisateur..."
 
 # Permettre aux membres du groupe sudo d'executer toute commande
 sed -i 's/^%sudo.*/%sudo ALL=(ALL:ALL) ALL/' /etc/sudoers

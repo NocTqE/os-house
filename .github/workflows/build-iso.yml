@@ -1,4 +1,4 @@
-name: Build SylonOS ISO
+name: Build ArcheOS ISO
 
 on:
   push:
@@ -41,8 +41,8 @@ jobs:
       - name: Rename ISO
         run: |
           if [ -f live-image-amd64.hybrid.iso ]; then
-            mv live-image-amd64.hybrid.iso sylon-os-1.0-amd64.iso
-            ls -lh sylon-os-1.0-amd64.iso
+            mv live-image-amd64.hybrid.iso arche-os-1.0-amd64.iso
+            ls -lh arche-os-1.0-amd64.iso
           else
             echo "ERROR: ISO not found!"
             tail -100 build.log
@@ -52,7 +52,7 @@ jobs:
       - name: Upload ISO as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SylonOS-ISO
-          path: sylon-os-1.0-amd64.iso
+          name: ArcheOS-ISO
+          path: arche-os-1.0-amd64.iso
           retention-days: 7
           compression-level: 0

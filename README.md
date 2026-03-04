@@ -1,4 +1,4 @@
-# SylonOS
+# ArcheOS
 
 Distribution Linux custom basee sur Debian Bookworm avec un look Windows 11 dark et accent orange.
 
@@ -6,56 +6,30 @@ Distribution Linux custom basee sur Debian Bookworm avec un look Windows 11 dark
 
 - **KDE Plasma** avec theme sombre et accent orange (#FF6D00)
 - **Installation automatique** : seules questions = langue, clavier, nom d'utilisateur + mot de passe
-- **Boot splash** : logo SylonOS au demarrage (Plymouth)
+- **Boot splash** : logo ArcheOS au demarrage (Plymouth)
 - **Barre des taches centree** style Windows 11
-- **Apps incluses** : Firefox, Dolphin, Konsole, Spectacle, Ark
+- **Apps incluses** : Google Chrome, Firefox, LibreOffice, Dolphin, Konsole, Mousepad, Galculator
 - **VMware ready** : open-vm-tools pre-installe
+- **Parametres verrouilles** : fond d'ecran et hostname non modifiables par l'utilisateur
 
-## Prerequis
+## Build
 
-- Windows 11 avec WSL2
-- Debian dans WSL2 : `wsl --install -d Debian`
-- VMware Workstation Player (pour tester l'ISO)
-
-## Installation (dans WSL2 Debian)
-
-```bash
-# 1. Installer les outils
-sudo apt update && sudo apt install -y live-build make git imagemagick
-
-# 2. Cloner le projet DANS le filesystem WSL (pas /mnt/c/)
-cd ~
-git clone <votre-repo> os-house
-cd os-house
-
-# 3. Generer les assets graphiques (logo, wallpaper, splash)
-chmod +x generate-assets.sh
-./generate-assets.sh
-
-# 4. Rendre les scripts executables
-chmod +x auto/config auto/build auto/clean
-chmod +x config/hooks/normal/*.hook.chroot
-
-# 5. Build de l'ISO
-make all
-
-# 6. Copier l'ISO sur le bureau Windows
-make copy-iso
-```
+Le build se fait automatiquement via GitHub Actions. Chaque push sur `main` genere un ISO telechareable dans les Artifacts.
 
 ## Test sur VMware
 
 1. Ouvrir VMware Workstation Player
 2. Creer une VM : Linux > Debian 12 64-bit
 3. RAM : 4 Go, CPU : 2, Disque : 20 Go
-4. Pointer vers `sylon-os.iso`
-5. Demarrer → l'installation commence automatiquement
+4. Pointer vers `arche-os.iso`
+5. Demarrer -> l'installation commence automatiquement
 
 ## Personnalisation
 
 - **Packages** : editer `config/package-lists/*.list.chroot`
-- **Wallpaper** : remplacer `config/includes.chroot/usr/share/backgrounds/sylon/default-wallpaper.png`
+- **Wallpaper** : remplacer `config/includes.chroot/usr/share/backgrounds/arche/default-wallpaper.png`
 - **Theme** : editer `config/hooks/normal/0400-configure-theme.hook.chroot`
 - **Preseed** : editer `config/includes.installer/preseed.cfg`
+- **Restrictions** : editer `config/hooks/normal/0700-lock-settings.hook.chroot`
 
-Apres modification : `make clean && make all`
+Apres modification : push sur main -> GitHub Actions rebuild automatiquement.

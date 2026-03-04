@@ -1,0 +1,46 @@
+#!/bin/sh
+set -e
+
+echo ">>> ArcheOS: Verrouillage des parametres utilisateur..."
+
+# --- Empecher le changement de fond d'ecran ---
+# Verrouiller le wallpaper via Plasma config immutability
+mkdir -p /etc/xdg
+cat >> /etc/xdg/kdeglobals << 'LOCK'
+
+[KDE Action Restrictions][$i]
+plasma/allow_configure_desktop=false
+LOCK
+
+# --- Empecher le changement de hostname ---
+# Proteger /etc/hostname en lecture seule pour les utilisateurs normaux
+chmod 644 /etc/hostname
+# Bloquer hostnamectl pour les utilisateurs non-root via polkit
+mkdir -p /etc/polkit-1/rules.d
+cat > /etc/polkit-1/rules.d/10-deny-hostname-change.rules << 'POLKIT'
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.hostname1.set-static-hostname" ||
+        action.id == "org.freedesktop.hostname1.set-pretty-hostname" ||
+        action.id == "org.freedesktop.hostname1.set-hostname") {
+        if (!subject.isInGroup("root")) {
+            return polkit.Result.NO;
+        }
+    }
+});
+POLKIT
+
+# --- Empecher la modification des parametres systeme sensibles ---
+# Bloquer l'acces aux parametres systeme KDE (date/heure, utilisateurs)
+cat > /etc/polkit-1/rules.d/11-deny-system-settings.rules << 'POLKIT2'
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.timedate1.set-time" ||
+        action.id == "org.freedesktop.timedate1.set-timezone" ||
+        action.id == "org.freedesktop.accounts.change-own-user-data") {
+        if (!subject.isInGroup("root")) {
+            return polkit.Result.AUTH_ADMIN;
+        }
+    }
+});
+POLKIT2
+
+echo ">>> Parametres verrouilles."

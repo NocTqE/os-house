@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-echo ">>> SylonOS: Configuration du theme sombre + orange..."
+echo ">>> ArcheOS: Configuration du theme sombre + orange..."
 
 # --- SDDM theme sombre ---
 mkdir -p /etc/sddm.conf.d

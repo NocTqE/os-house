@@ -1,8 +1,0 @@
-[Plymouth Theme]
-Name=SylonOS
-Description=SylonOS boot splash - logo on dark background
-ModuleName=script
-
-[script]
-ImageDir=/usr/share/plymouth/themes/sylon
-ScriptFile=/usr/share/plymouth/themes/sylon/sylon.script

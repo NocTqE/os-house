@@ -14,7 +14,7 @@ plugin=org.kde.desktopcontainment
 wallpaperplugin=org.kde.image
 
 [Containments][1][Wallpaper][org.kde.image][General]
-Image=/usr/share/backgrounds/sylon/default-wallpaper.png
+Image=/usr/share/backgrounds/arche/default-wallpaper.jpg
 FillMode=2
 
 [Containments][2]
@@ -47,7 +47,7 @@ immutability=1
 plugin=org.kde.plasma.icontasks
 
 [Containments][2][Applets][4][Configuration][General]
-launchers=applications:org.kde.dolphin.desktop,applications:firefox-esr.desktop,applications:org.kde.konsole.desktop
+launchers=applications:org.kde.dolphin.desktop,applications:google-chrome.desktop,applications:firefox-esr.desktop,applications:org.kde.konsole.desktop
 
 [Containments][2][Applets][5]
 immutability=1

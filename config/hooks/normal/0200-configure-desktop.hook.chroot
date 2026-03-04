@@ -1,14 +1,14 @@
 #!/bin/sh
 set -e
 
-echo ">>> SylonOS: Configuration du bureau..."
+echo ">>> ArcheOS: Configuration du bureau..."
 
 # Configurer SDDM comme display manager par defaut
 echo "/usr/bin/sddm" > /etc/X11/default-display-manager
 mkdir -p /etc/sddm.conf.d
 
 # Session Plasma par defaut
-cat > /etc/sddm.conf.d/sylon.conf << 'SDDMCONF'
+cat > /etc/sddm.conf.d/arche.conf << 'SDDMCONF'
 [Theme]
 Current=breeze
 

@@ -1,4 +1,4 @@
-# SylonOS Plymouth Theme Script
+# ArcheOS Plymouth Theme Script
 # Fond noir avec logo centre et points de chargement orange
 
 Window.SetBackgroundTopColor(0.0, 0.0, 0.0);

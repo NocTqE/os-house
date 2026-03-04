@@ -17,8 +17,8 @@ clean:
 
 copy-iso:
 	@if [ -f live-image-amd64.hybrid.iso ]; then \
-		cp live-image-amd64.hybrid.iso "/mnt/c/Users/$$(cmd.exe /c echo %USERNAME% 2>/dev/null | tr -d '\r')/Desktop/sylon-os.iso"; \
-		echo "ISO copiee sur le Bureau Windows : sylon-os.iso"; \
+		cp live-image-amd64.hybrid.iso "/mnt/c/Users/$$(cmd.exe /c echo %USERNAME% 2>/dev/null | tr -d '\r')/Desktop/arche-os.iso"; \
+		echo "ISO copiee sur le Bureau Windows : arche-os.iso"; \
 	else \
 		echo "ERREUR: ISO introuvable. Lancez 'make build' d'abord."; \
 	fi

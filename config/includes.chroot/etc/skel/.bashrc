@@ -1,4 +1,4 @@
-# ~/.bashrc - SylonOS
+# ~/.bashrc - ArcheOS
 
 # Si pas interactif, ne rien faire
 case $- in
@@ -13,8 +13,8 @@ HISTFILESIZE=2000
 shopt -s histappend
 shopt -s checkwinsize
 
-# Prompt SylonOS (orange)
-PS1='\[\033[01;33m\]\u@sylon\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# Prompt ArcheOS (orange)
+PS1='\[\033[01;33m\]\u@arche\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 # Aliases
 alias ls='ls --color=auto'

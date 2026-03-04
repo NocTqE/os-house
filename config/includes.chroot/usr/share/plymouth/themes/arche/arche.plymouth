@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=ArcheOS
+Description=ArcheOS boot splash - logo on dark background
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/arche
+ScriptFile=/usr/share/plymouth/themes/arche/arche.script
