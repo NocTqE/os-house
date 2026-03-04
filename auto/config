@@ -5,15 +5,12 @@ lb config noauto \
     --architectures amd64 \
     --archive-areas "main contrib non-free non-free-firmware" \
     --binary-images iso-hybrid \
-    --bootloaders "syslinux,grub-efi" \
+    --bootloader syslinux \
     --debian-installer live \
     --debian-installer-distribution bookworm \
     --debian-installer-gui true \
     --security true \
-    --updates true \
     --apt-recommends true \
-    --firmware-binary true \
-    --firmware-chroot true \
     --iso-application "SylonOS" \
     --iso-publisher "SylonOS Project" \
     --iso-volume "SylonOS 1.0" \

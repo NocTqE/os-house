@@ -8,16 +8,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
     timeout-minutes: 120
 
     steps:
+      - name: Install system tools
+        run: |
+          apt-get update
+          apt-get install -y git imagemagick fonts-dejavu-core live-build make curl
+
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Install build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y live-build imagemagick fonts-dejavu-core
 
       - name: Generate assets (logo, wallpaper, splash)
         run: |
@@ -33,17 +35,16 @@ jobs:
         run: lb config
 
       - name: Build ISO
-        run: sudo lb build 2>&1 | tee build.log
+        run: lb build 2>&1 | tee build.log
 
       - name: Rename ISO
         run: |
           if [ -f live-image-amd64.hybrid.iso ]; then
             mv live-image-amd64.hybrid.iso sylon-os-1.0-amd64.iso
-            echo "ISO_NAME=sylon-os-1.0-amd64.iso" >> $GITHUB_ENV
             ls -lh sylon-os-1.0-amd64.iso
           else
             echo "ERROR: ISO not found!"
-            cat build.log | tail -100
+            tail -100 build.log
             exit 1
           fi
 
